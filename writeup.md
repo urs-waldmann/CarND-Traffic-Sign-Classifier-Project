@@ -39,13 +39,13 @@ I used the numpy library to calculate summary statistics of the traffic signs da
 * The size of the validation set is 4410.
 * The size of test set is 12630.
 * The shape of a traffic sign image is (32, 32, 3).
-* The number of unique classes/labels in the data set is 
+* The number of unique classes/labels in the data set is 43.
 
 #### 2. Exploratory visualization of the dataset
 
 Here is an exploratory visualization of the training data set. It is a bar chart showing how the training data is distributed. On the x-axis is the traffic sign class id, on the y-axis are the counts.
 
-![Figure 1](figures/distr_b_aug.jpg)
+![Traffic sign distribution before data augmentation](figures/distr_b_aug.jpg "Traffic sign distribution before data augmentation")
 
 ### Design and Test a Model Architecture
 
@@ -53,9 +53,10 @@ Here is an exploratory visualization of the training data set. It is a bar chart
 
 As a first step, I decided to convert the images to grayscale. As it turned out I got a slightly higher accuracy with the colored images. On the one hand the German traffic signs may work even for colour blind people but on the other hand the color is a distinct property of the traffic signs.
 
-Here is an example of a traffic sign image after grayscaling.
+Here is an example of a traffic sign image before and after grayscaling.
 
-![alt text][image2]
+![Before grayscaling][image2]
+![After grayscaling][image2]
 
 As a last step, I normalized the image data because ...
 
