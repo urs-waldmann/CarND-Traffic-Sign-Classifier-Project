@@ -34,42 +34,73 @@ Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/4
 #### 1. Basic summary of the data set
 
 I used the numpy library to calculate summary statistics of the traffic signs data set:
-
-* The size of training set is 34799.
+* The size of the training set is 34799.
 * The size of the validation set is 4410.
-* The size of test set is 12630.
+* The size of the test set is 12630.
 * The shape of a traffic sign image is (32, 32, 3).
 * The number of unique classes/labels in the data set is 43.
 
 #### 2. Exploratory visualization of the dataset
 
-Here is an exploratory visualization of the training data set. It is a bar chart showing how the training data is distributed. On the x-axis is the traffic sign class id, on the y-axis are the counts.
+Here is an exploratory visualization of the training data set. It is a bar chart showing how the training data is distributed.
 
-![Traffic sign distribution before data augmentation](figures/distr_b_aug.jpg "Traffic sign distribution before data augmentation")
+![Traffic sign distribution before data augmentation](figures/distr_b_aug.jpg)
+
+Here we see three traffic sign examples of the training data set.
+
+![Traffic sign example 1 from training data](figures/visualization.jpg)
+![Traffic sign example 2 from training data](figures/vis_2.jpg)
+![Traffic sign example 3 from training data](figures/vis_3.jpg)
 
 ### Design and Test a Model Architecture
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale. As it turned out I got a slightly higher accuracy with the colored images. On the one hand the German traffic signs may work even for colour blind people but on the other hand the color is a distinct property of the traffic signs.
+#### 1. Grayscale
 
-Here is an example of a traffic sign image before and after grayscaling.
+As a first step, I decided to convert the images to grayscale. As it turned out I get a slightly higher accuracy with the colored images. On the one hand the German traffic signs may work even for colour blind people but on the other hand the color is a distinct property of the traffic signs. So I decided to stick with the colored images.
 
-![Before grayscaling][image2]
-![After grayscaling][image2]
+Here are three examples of traffic sign images after grayscaling.
 
-As a last step, I normalized the image data because ...
+![Traffic sign example 1 after grayscaling](./figures/vis_gray.jpg)
+![Traffic sign example 2 after grayscaling](./figures/vis_gray_2.jpg)
+![Traffic sign example 3 after grayscaling](./figures/vis_gray_3.jpg)
 
-I decided to generate additional data because ... 
+#### 2. Normalization
 
-To add more data to the the data set, I used the following techniques because ... 
+As a last step, I normalized the image data with the min-max method because in that way the mean of the distribution of the pixel-values is zero and the standard deviation for each pixel-value is the same.
+Here are three examples of traffic sign images after grayscaling.
 
-Here is an example of an original image and an augmented image:
+![Traffic sign example 1 after normalization](./figures/vis_norm.jpg)
+![Traffic sign example 2 after normalization](./figures/vis_norm_2.jpg)
+![Traffic sign example 3 after normalization](./figures/vis_norm_3.jpg)
 
-![alt text][image3]
+#### 3. Training Data Augmentation
 
-The difference between the original data set and the augmented data set is the following ... 
+I decided to generate additional training data because some traffic signs are underrepresentated in the original training data set as we saw in the section *Data Set Summary & Exploration* above. This means that the neural network will train and thus optimize its parameters for the overrepresented traffic signs in a better way while it will train and thus optimize its parameters for the underrepresented traffic signs in a worse way. This will have an impact on the accuracy of the test set and the five new German traffic signs. Let us therefore consider the case where within my five new German traffic signs are only traffic signs that in the original training data are underrepresented. In this case my accuracy in predicting the class id of these five new German traffic signs will be low. If I instead consider the case where within my five new German traffic signs are only traffic signs that in the original training data are overrepresented my accuracy in predicting these five new German traffic signs will be high. To balance this I augmented the training data set.
+A good way to augment data is to consider methods that already exist in the original data set. In the original training data set the traffic signs are shown from different perspectives, they have different size and their brightness is different. That is why I choose to augment the original training data set using rotation and resize.
+To add more data to the the training data set, I resize some of the original training data to a shape of (28, 28, 3) and pad the edges such that my image shape is again (32, 32, 3). Furthermore I rotate some images by -10° and some by 10°.
+Another way to augment the training data is to change the brightness of the original training data set. I did not consider this in my implementation.
+Here are three traffic sign examples of added images:
 
+![Traffic sign example 1 after augmentation](./figures/vis_aug.png)
+![Traffic sign example 2 after augmentation](./figures/vis_aug_2.png)
+![Traffic sign example 3 after augmentation](./figures/vis_aug_3.png)
+
+We notice that the traffic signs are as recognizable as the traffic signs of the original data.
+After the augmenting the original training data the distribution of the traffic signs looks like this:
+
+![Traffic sign distribution after data augmentation](figures/distr_a_aug.jpg)
+
+We note that the distribution of the traffic signs is more even.
+Basic summary of the data set after augmentation:
+* The size of the training set is now 57028.
+* The size of the validation set remains 4410.
+* The size of test set remains 12630.
+* The shape of a traffic sign image remains (32, 32, 3).
+* The number of unique classes/labels in the data set remains 43.
+
+### Model Architecture
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
