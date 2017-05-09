@@ -45,7 +45,7 @@ I used the numpy library to calculate summary statistics of the traffic signs da
 
 Here is an exploratory visualization of the training data set. It is a bar chart showing how the training data is distributed. On the x-axis is the traffic sign class id, on the y-axis are the counts.
 
-![Figure 1](figures/distr_b_aug.png)
+![Figure 1](figures/distr_b_aug.jpg)
 
 ### Design and Test a Model Architecture
 
