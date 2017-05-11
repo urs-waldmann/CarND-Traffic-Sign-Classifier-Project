@@ -117,11 +117,11 @@ My final model consists of the following layers:
 | Output        		| inputs 84, outputs 43      					|
 
 
-#### 3. Train the Model
+#### 2. Train the Model
 
 To train the model, I used the Adam optimizer. I have 10 epochs, a batch size of 64 and my learning rate is 0.001. Furthermore are the weights and biases variables initialized with a mean of zero and a standard deviation of 0.05.
 
-#### 4. Discussion (Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.)
+#### 3. Discussion
 
 My final model results are:
 * Validation set accuracy of 94.3%.
@@ -145,10 +145,13 @@ Discussing the LeNet architecture:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![New German traffic sign 1](./new-german-traffic-signs/einf_verboten.jpg)
+![New German traffic sign 2](./new-german-traffic-signs/geradeaus.jpg)
+![New German traffic sign 3](./new-german-traffic-signs/hoechstgeschw_70.jpg)
+![New German traffic sign 4](./new-german-traffic-signs/vorfahrtsstrasse.jpg)
+![New German traffic sign 5](./new-german-traffic-signs/zwanzig.jpg)
 
-The first image might be difficult to classify because ...
+The first image might be difficult to classify because
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
