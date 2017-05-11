@@ -61,7 +61,7 @@ Here are three examples of traffic sign images after normalization.
 ![Traffic sign example 2 after normalization](./figures/vis_norm_2.jpg)
 ![Traffic sign example 3 after normalization](./figures/vis_norm_3.jpg)
 
-#### 3. Training Data Augmentation
+#### 3. Training data augmentation
 
 I decided to generate additional training data because some traffic signs are underrepresentated in the original training data set as we saw in the section *Data Set Summary & Exploration* above. This means that the neural network will train and thus optimize its parameters for the overrepresented traffic signs in a better way while it will train and thus optimize its parameters for the underrepresented traffic signs in a worse way. This will have an impact on the accuracy of the test set and the five new German traffic signs. Let us therefore consider the case where within my five new German traffic signs are only traffic signs that in the original training data are underrepresented. In this case my accuracy in predicting the class id of these five new German traffic signs will be low. If I instead consider the case where within my five new German traffic signs are only traffic signs that in the original training data are overrepresented my accuracy in predicting these five new German traffic signs will be high. To balance this I augmented the training data set.
 
@@ -94,7 +94,7 @@ Basic summary of the data set after augmentation:
 
 ### Model Architecture
 
-#### 1. Final Model Architecture
+#### 1. Final model architecture
 
 My final model consists of the following layers:
 
@@ -117,7 +117,7 @@ My final model consists of the following layers:
 | Output        		| inputs 84, outputs 43      					|
 
 
-#### 2. Train the Model
+#### 2. Train the model
 
 To train the model, I used the Adam optimizer. I have 10 epochs, a batch size of 64 and my learning rate is 0.001. Furthermore are the weights and biases variables initialized with a mean of zero and a standard deviation of 0.05.
 
@@ -145,44 +145,86 @@ Discussing the LeNet architecture:
 
 Here are five German traffic signs that I found on the web:
 
-![New German traffic sign 1](./new-german-traffic-signs/einf_verboten.jpg)
-![New German traffic sign 2](./new-german-traffic-signs/geradeaus.jpg)
-![New German traffic sign 3](./new-german-traffic-signs/hoechstgeschw_70.jpg)
 ![New German traffic sign 4](./new-german-traffic-signs/vorfahrtsstrasse.jpg)
+![New German traffic sign 3](./new-german-traffic-signs/hoechstgeschw_70.jpg)
 ![New German traffic sign 5](./new-german-traffic-signs/zwanzig.jpg)
+![New German traffic sign 2](./new-german-traffic-signs/geradeaus.jpg)
+![New German traffic sign 1](./new-german-traffic-signs/einf_verboten.jpg)
 
-The first image might be difficult to classify because
+The second image might be difficult to classify because the angle of the picture of the traffic sign is much bigger than of the other training signs.
+The last image will be very difficult to classify because it contains two signs. They are of the same type but they are very small. I added this image because I really want to see how well the trained network does on quite big changes.
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Predictions & discussion
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Priority road      		| Priority road   									| 
+| Speed limit (70km/h)			| Yield										|
+| Speed limit (20km/h)					| Speed limit (20km/h)											|
+| Ahead only	      		| Ahead only					 				|
+| No entry			| Pedestrians      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. This does not compare favorably to the accuracy on the test set of 92.9%. Without the last image (that was really hard to predict) though the accuracy is 75%. This is closer to the test accuracy. Adding another fifth image that is easy to predict will most probably lead to an accuracy of 80%. This is close to the test accuracy.
+I am surprised nevertheless that I did not get my first four new signs right. I was expecting a better accuracy of the new images.
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3. Quality of the model
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the 22nd cell of my Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is absolutely sure that this is a priority road sign (probability of 1.0), and the image does contain a priority road sign. The top five softmax probabilities are:
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| 0.999988         			| Priority road   									| 
+| 6.62758e-06     				|End of no passing by vehicles over 3.5 metric ton					|
+| 4.01964e-06					| End of no passing											|
+| 5.18654e-07	      			| No entry					 				|
+| 1.22818e-07 				    | Right-of-way at the next intersection      							|
 
 
-For the second image ... 
+For the second image, the model is relatively sure that this is a yield sign (probability of 0.6), but the image does contain a speed limit (70km/h) sign. The top five softmax probabilities are:
 
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.591793         			| Yield   									| 
+| 0.141179     				|No passing					|
+| 0.114104					| Speed limit (120km/h)										|
+| 0.0978724	      			| Speed limit (70km/h)					 				|
+| 0.0414736 				    | No vehicles     							|
 
+Only with a probability of 10% does the model predict the correct sign, i.e. a speed limit (70km/h). By augmenting the speed limit (70km/h) signs in the training data using a rotation method I can increase probability to predict this traffic sign correctly.
+
+For the third image, the model is quite sure that this is a speed limit (20km/h) sign (probability of 0.9), and the image does contain a speed limit (20km/h) sign. The top five softmax probabilities are:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.883512         			| Speed limit (20km/h)  									| 
+| 0.114056     				|Speed limit (30km/h)					|
+| 0.000906641					| Speed limit (70km/h)									|
+| 0.000687374	      			| No vehicles					 				|
+| 0.000587383 				    | Speed limit (120km/h)     							|
+
+For the fourth image, the model is absolutely sure that this is an ahead only sign (probability of 1.0), and the image does contain a ahead only sign. The top five softmax probabilities are:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.999914        			| Ahead only  									| 
+| 7.19175e-05    				|Turn left ahead					|
+| 1.19258e-05 					| Turn right ahead									|
+| 1.59193e-06	      			| Yield					 				|
+| 2.53465e-08				    | Speed limit (60km/h)     							|
+
+For the fifth image, the model is not really sure whether this is a pedestrians sign (probability of 0.5), and in fact the image does contain two no entry signs. The top five softmax probabilities are:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.49037        			| Pedestrians 									| 
+| 0.313619   				|General caution					|
+| 0.135102 					| Priority road									|
+| 0.0153313 	      			| Road narrows on the right					 				|
+| 0.0135095				    | Right-of-way at the next intersection     							|
+
+This image was very difficult to predict since it contains two traffic signs (of the same type) that are relatively small on the image. Increasing the depth of the neural network can maybe improve this problem. Depth reduces the irrelevant spatial information of the image, i.e. the position of the sign on the image, and concentrates on the relevant information, i.e. typ of the traffic sign.
